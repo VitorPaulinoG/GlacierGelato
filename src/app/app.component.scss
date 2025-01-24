@@ -1,0 +1,43 @@
+
+.example-container {
+    width: auto;
+    height: 100%;
+    margin: 0px;
+    border: 1px solid #555;
+    background: #eee;
+}
+
+.sidebar {
+    margin: 0;
+    padding: 15px;
+    border-radius: 0;
+}
+
+.logo {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+}
+
+hr {
+    margin: 20px 0;
+    height: 2px;
+    background-color: rgb(95, 95, 95);
+    border: none;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+        font-size: 18px;
+        font-weight: 600;
+    }
+}
+
+nav li {
+    height: 40px;
+}
+

@@ -1,0 +1,40 @@
+.back-content {
+    width: 1fr;
+    height: 100%;
+    margin: 0;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.ice-cream {
+    width: 1fr;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.gap-10 {
+    gap: 10px;
+}

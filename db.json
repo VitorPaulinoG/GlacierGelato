@@ -1,0 +1,70 @@
+{
+  "iceCreams": [
+    {
+      "id": 1,
+      "name": "Stracciatella",
+      "description": "Gelato de baunilha com lascas de chocolate amargo.",
+      "price": 10
+    },
+    {
+      "id": 2,
+      "name": "Pistacchio di Bronte",
+      "description": "Sorvete de pistache da Sicília, com um sabor intenso e cremoso.",
+      "price": 12.5
+    },
+    {
+      "id": 3,
+      "name": "Mango Sorbet",
+      "description": "Sorbet de manga fresca, leve e refrescante.",
+      "price": 7.45
+    },
+    {
+      "id": 4,
+      "name": "Tiramisu",
+      "description": "Gelato cremoso com café, mascarpone e um toque de cacau.",
+      "price": 9.9
+    },
+    {
+      "id": 5,
+      "name": "Raspberry Sorbet",
+      "description": "Sorbet de framboesa, refrescante e vibrante.",
+      "price": 15.9
+    },
+    {
+      "id": 6,
+      "name": "Hazelnut Gelato",
+      "description": "Gelato de avelã com uma textura cremosa e sabor rico.",
+      "price": 20
+    },
+    {
+      "id": 7,
+      "name": "Cioccolato Fondente",
+      "description": "Gelato de chocolate amargo, cremoso e intenso.",
+      "price": 18
+    },
+    {
+      "id": 8,
+      "name": "Vanilla Bean",
+      "description": "Gelato clássico de baunilha feito com favas de baunilha naturais.",
+      "price": 10.45
+    },
+    {
+      "id": 9,
+      "name": "Affogato al Caffè",
+      "description": "Sorvete de baunilha servido com café expresso quente.",
+      "price": 13.99
+    },
+    {
+      "id": 10,
+      "name": "Bacio",
+      "description": "Gelato de avelã e chocolate com pedaços de avelã torrada.",
+      "price": 17.99
+    },
+    {
+      "id": 11,
+      "name": "Sorvete de Maracujá",
+      "description": "",
+      "price": 10
+    }
+  ]
+}
