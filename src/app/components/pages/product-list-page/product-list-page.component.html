@@ -2,7 +2,7 @@
     <main>
         <div class="d-flex flex-row justify-content-between">
           <h1>Produtos</h1>
-          <button mat-flat-button [routerLink]="['register']">Cadastrar</button>
+          <button mat-flat-button (click)="onAdd()">Cadastrar</button>
         </div>
         <div class="search-filters-container">
             <mat-form-field class="form-field">
@@ -51,6 +51,16 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+          <mat-paginator #paginator
+               class="demo-paginator"
+               (page)="handlePageEvent($event)"
+               [length]="length"
+               [pageSize]="pageSize"
+               [showFirstLastButtons]="true"
+               [hidePageSize]="false"
+               [pageIndex]="pageIndex"
+               aria-label="Select page">
+          </mat-paginator>  
         </section>
     </main>
 </div>

@@ -15,34 +15,52 @@ import {
 } from '@angular/material/snack-bar';
 import { IceCreamService } from '../../../services/ice-cream.service';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { IceCream } from '../../../models/IceCream';
 
 @Component({
-  selector: 'app-add-product-page',
+  selector: 'app-edit-product-page',
   imports: [ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatButtonModule],
-  templateUrl: './add-product-page.component.html',
-  styleUrl: './add-product-page.component.scss'
+  templateUrl: './edit-product-page.component.html',
+  styleUrl: './edit-product-page.component.scss'
 })
-export class AddProductPageComponent {
+export class EditProductPageComponent {
   form:FormGroup;
-
+  iceCream: IceCream | undefined;
+  
   constructor(
     private formBuilder:FormBuilder,
+    private route: ActivatedRoute,
     private iceCreamService:IceCreamService,
     private snackBar: MatSnackBar,
     private location: Location) {
       this.form = this.formBuilder.group({
-        name: [null, Validators.required],
-        description:[null, Validators.required],
-        price: [null, Validators.required]
-      })
+        name: [null],
+        description:[null],
+        price: [null]
+      });
+      let id = this.route.snapshot.paramMap.get('id');
+      if(id) {
+        iceCreamService.getById(id).subscribe(p =>  {
+          this.form = this.formBuilder.group({
+            name: [p?.name, Validators.required],
+            description: [p?.description, Validators.required],
+            price: [p?.price, Validators.required]
+          });
+          this.iceCream = p;
+        });
+      } else {
+        this.showMessage('Error ao carregar item!', '', {duration: 1000});
+        location.back();
+      }
   }
 
   onConfirm() {
-    if(this.form.valid) {
-      this.iceCreamService.add(this.form.value)
+    if(this.form.valid && this.iceCream) {
+      this.iceCreamService.update(this.iceCream?.id, this.form.value)
       .subscribe({
         next: (p) => {
-          this.showMessage('Sorvete cadastrado com sucesso!', 'Ok', {duration: 1000});
+          this.showMessage('Sorvete alterado com sucesso!', 'Ok', {duration: 1000});
           this.location.back();
         },
         error: (e) => this.showMessage(e, '', {duration: 1000})
@@ -63,4 +81,5 @@ export class AddProductPageComponent {
       return this.snackBar.open(message, action, config);
     return this.snackBar.open(message, action);
   }
+
 }
