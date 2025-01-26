@@ -5,15 +5,37 @@
           <button mat-flat-button (click)="onAdd()">Cadastrar</button>
         </div>
         <div class="search-filters-container">
+          <form [formGroup]="form">
             <mat-form-field class="form-field">
-                <mat-label>Buscar produtos</mat-label>
-                <input matInput type="text" [(ngModel)]="value">
-                @if (value) {
-                  <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-                    <mat-icon>close</mat-icon>
-                  </button>
-                }
+              <mat-label>Buscar produtos</mat-label>
+              <input matInput type="text" formControlName="name">
             </mat-form-field>
+            <mat-form-field class="left-control">
+              <mat-label>Operador</mat-label>
+              <mat-select matNativeControl formControlName="priceOperator" name="priceOperator">
+                <mat-option value="" selected></mat-option>
+                @for (option of priceOperators; track option) {
+                  <mat-option [value]="option">{{option}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field floatLabel="always" class="price">
+              <mat-label>Preço</mat-label>
+              <input matInput type="number" class="example-right-align" placeholder="0.00"  formControlName="price"/>
+              <span matTextPrefix>R$&nbsp;</span>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Ordenar por</mat-label>
+              <mat-select matNativeControl formControlName="sort" name="sortOption">
+                <mat-option value="" selected></mat-option>
+                @for (sortOption of sortOptions; track sortOption) {
+                  <mat-option [value]="sortOption.value">{{sortOption.option}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </form>
+          <button mat-flat-button (click)="onFilter()">Filtrar</button>
+
         </div>
         <section class="product-list-container">
           <table mat-table [dataSource]="iceCreams" class="mat-elevation-z8">

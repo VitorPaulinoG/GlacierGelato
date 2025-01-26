@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
+import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 import { IceCream } from '../../../models/IceCream';
 import {
   MatDialog,
@@ -29,11 +30,12 @@ import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatPaginatorIntl, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import { AlertConfirmationComponent } from '../../alert-confirmation/alert-confirmation.component';
+import { IceCreamFilter } from '../../../models/IceCreamFilter';
 
 @Component({
   selector: 'product-list-page',
   imports: [
-    MatIconModule, MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule, 
+    MatIconModule, MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, ReactiveFormsModule,
     MatTableModule, CurrencyPipe, MatPaginatorModule,  MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent
   ],
   templateUrl: './product-list-page.component.html',
@@ -41,8 +43,9 @@ import { AlertConfirmationComponent } from '../../alert-confirmation/alert-confi
 })
 export class ProductListPageComponent {
 
+  form:FormGroup;
+  
   value: string = '';
-
   length: number = 0;
   pageSize: number = 5;
   pageIndex: number = 0;
@@ -50,15 +53,27 @@ export class ProductListPageComponent {
   displayedColumns: string[] = ['id', 'name', 'description', 'price', 'actions'];
   iceCreams$: Observable<IceCream[]> = of([]);
   iceCreams: IceCream[] = [];
+  sortOptions = [{option: 'Nome', value: 'name' }, {option: 'Preço', value: 'price' }];
 
+  priceOperators = ['=', '>', '>=', '<', '<='];
   constructor(
     private iceCreamService: IceCreamService, 
     private router: Router,
+    private formBuilder:FormBuilder,
     private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog) {
+
+    this.form = this.formBuilder.group({
+      name: [null],
+      priceOperator: [null],
+      price:[null],
+      sort: [null]
+    });
+    
     this.loadPage();
   }
+
 
   handlePageEvent($event: PageEvent) {
     this.pageIndex = $event.pageIndex;
@@ -68,8 +83,16 @@ export class ProductListPageComponent {
   }
 
   loadPage() {
-    this.iceCreamService.getPaginated(this.pageSize, this.pageIndex + 1).subscribe(
-      {
+    let filter = new IceCreamFilter(
+      this.form.value.name,
+      this.form.value.priceOperator,
+      this.form.value.price,
+      this.form.value.sort
+    );
+    console.log(this.form.value.sort);
+    this.iceCreamService.getFilteredAndSortedAndPaginated(
+      filter, 
+      this.pageSize, this.pageIndex + 1).subscribe({
         next: (p) => {
           this.iceCreams$ = of(p.data);
           this.iceCreams$.subscribe(x => this.iceCreams = x);
@@ -78,6 +101,8 @@ export class ProductListPageComponent {
       }
     );
   }
+
+
 
   onAdd(){
     this.router.navigate(['register'], {relativeTo: this.activatedRoute});
@@ -103,6 +128,10 @@ export class ProductListPageComponent {
     );
   }
 
+  onFilter() {
+    this.loadPage();
+  }
+  
   openDialog(header: string, description: string, cancelButtonName: string, confirmationButtonName: string, confirmationAction: () => void) {
     this.dialog.open(AlertConfirmationComponent, {
       width: '400px', 

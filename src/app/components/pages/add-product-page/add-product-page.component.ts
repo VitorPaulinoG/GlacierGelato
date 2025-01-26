@@ -34,7 +34,7 @@ export class AddProductPageComponent {
         name: [null, Validators.required],
         description:[null, Validators.required],
         price: [null, Validators.required]
-      })
+      });
   }
 
   onConfirm() {
