@@ -36,7 +36,7 @@ import { IceCreamFilter } from '../../../models/IceCreamFilter';
   selector: 'product-list-page',
   imports: [
     MatIconModule, MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, ReactiveFormsModule,
-    MatTableModule, CurrencyPipe, MatPaginatorModule,  MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent
+    MatTableModule, CurrencyPipe, MatPaginatorModule
   ],
   templateUrl: './product-list-page.component.html',
   styleUrl: './product-list-page.component.scss',
